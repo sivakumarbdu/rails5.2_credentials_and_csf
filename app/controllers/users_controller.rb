@@ -61,6 +61,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def violation_report
+    p request.raw_post
+  end
+
+  def root_test
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
