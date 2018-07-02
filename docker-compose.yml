@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+  db:
+    image: postgres:9.4.1
+    ports:
+      - "5432:5432"
+    environment:
+      -  POSTGRES_PASSWORD=password
+    volumes:
+      - /home/sivakumar/dev/volumes/pgdata/etc:/etc/postgresql:Z
+      - /home/sivakumar/dev/volumes/pgdata/log:/var/log/postgresql:Z
+      - /home/sivakumar/dev/volumes/pgdata/data:/var/lib/postgresql/data:Z
+  app:
+    build: .
+    command: bundle exec rails s -b 0.0.0.0
+    environment:
+      - BUNDLE_PATH=/bundle
+    ports:
+      - 3000:3000
+    links:
+      - db
+    volumes:
+      - bundle:/bundle:Z
+      - .:/myapp:Z
+volumes:
+  bundle:
